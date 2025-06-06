@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>坏的FAQ设计案例</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* FAQ Material Design 样式 */
+        .faq-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            background: white;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            padding: 20px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-bottom: none;
+        }
+
+        .faq-question:hover {
+            background: #f5f5f5;
+            color: #667eea;
+        }
+
+        .faq-answer {
+            padding: 0 24px;
+            color: #666;
+            line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: #fafafa;
+        }
+
+        .faq-answer.active {
+            padding: 20px 24px;
+            max-height: 200px;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+            color: #999;
+        }
+
+        .faq-icon.active {
+            transform: rotate(180deg);
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .faq-section {
+                padding: 25px;
+                margin: 20px 0;
+            }
+
+            .faq-question {
+                padding: 16px 20px;
+                font-size: 1rem;
+            }
+
+            .faq-answer.active {
+                padding: 16px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+        <div class="container">
+            <!-- FAQ 部分 -->
+            <section class="faq-section">
+                <h2 class="faq-title">💬 常见问题</h2>
+
+                    <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    年化8%的收益率现实吗？
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            沪深300指数过去15年年化收益约9.2%，标普500指数过去30年年化收益约10%。考虑到市场波动，8%是相对保守且可实现的长期预期。
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    为什么散户炒股收益这么低？
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            统计显示90%散户长期亏损，主要原因：频繁交易产生高额手续费、追涨杀跌、缺乏专业知识、情绪化决策。定投能有效避免这些问题。
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    定投真的能平滑风险吗？
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            定投通过"平均成本法"，在市场低迷时买入更多份额，高涨时买入较少份额，长期看能有效平滑市场波动，降低投资风险。
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    应该选择什么基金进行定投？
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            建议选择宽基指数基金（如沪深300、中证500）或优质主动型基金。关键是低费率、业绩稳定、管理规范。切忌频繁更换基金。
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    市场暴跌时还要继续定投吗？
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            市场暴跌恰恰是定投的最佳时机！此时能以更低价格买入更多份额，为未来收益打下基础。巴菲特说："别人恐惧时我贪婪"。
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    <script>
+        // FAQ 折叠功能 - 修复版本
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.faq-icon');
+            
+            // 关闭其他已打开的FAQ
+            const allAnswers = document.querySelectorAll('.faq-answer');
+            const allIcons = document.querySelectorAll('.faq-icon');
+            
+            allAnswers.forEach((ans, index) => {
+                if (ans !== answer && ans.classList.contains('active')) {
+                    ans.classList.remove('active');
+                    ans.style.maxHeight = null;
+                    allIcons[index].classList.remove('active');
+                }
+            });
+            
+            // 切换当前FAQ
+            if (answer.classList.contains('active')) {
+                answer.classList.remove('active');
+                answer.style.maxHeight = null;
+                icon.classList.remove('active');
+            } else {
+                answer.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                icon.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html> 

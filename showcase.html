@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>适用于企业展示的手风琴组件展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f8fafc;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #4f46e5;
+        }
+
+        /* 技术标签样式 */
+        .tech-label {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            z-index: 100;
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1); /* 增加边界区分度 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* 强化立体感 */
+            transition: all 0.2s ease; /* 悬停动画 */
+            }
+
+            .tech-label:hover {
+            background: rgba(79, 70, 229, 0.9); /* 品牌色高亮 */
+            transform: translateY(-1px); /* 轻微上浮 */
+            }
+
+
+        /* 网格布局 */
+        .accordion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .accordion-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+
+        .accordion-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* 1. 企业图片手风琴 */
+        .enterprise-accordion {
+            width: 100%;
+            height: 350px;
+            display: flex;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .enterprise-accordion > div {
+            width: 50%;
+            flex-grow: 1;
+            flex-shrink: 1;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .enterprise-accordion > div:hover {
+            flex-shrink: 0;
+            width: 60%;
+        }
+
+        .enterprise-accordion div img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .enterprise-accordion div:hover img {
+            transform: scale(1.05);
+        }
+
+        .enterprise-accordion .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .enterprise-accordion div:hover .overlay {
+            transform: translateY(0);
+        }
+
+        /* 2. 3D透视倾斜手风琴 */
+        .perspective-accordion {
+            width: 100%;
+            height: 300px;
+            display: flex;
+            perspective: 1200px;
+            perspective-origin: center center;
+            gap: 8px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            overflow: visible;
+        }
+
+        .perspective-accordion .panel {
+            flex: 1;
+            height: 100%;
+            background: white;
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        .perspective-accordion .panel:hover {
+            transform: rotateY(-8deg) translateZ(20px);
+            flex: 1.8;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .perspective-accordion .panel:not(:hover) {
+            transform: rotateY(2deg) translateZ(-10px);
+            opacity: 0.8;
+        }
+
+        .perspective-accordion .panel-content {
+            position: absolute;
+            inset: 0;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+        }
+
+        .perspective-accordion .panel-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            color: #4f46e5;
+        }
+
+        .perspective-accordion .panel-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .perspective-accordion .panel-desc {
+            font-size: 0.9rem;
+            color: #6b7280;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease 0.2s;
+        }
+
+        .perspective-accordion .panel:hover .panel-desc {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 3. 赛博朋克发光手风琴 */
+        .cyberpunk-accordion {
+            width: 100%;
+            height: 320px;
+            display: flex;
+            background: #0a0a0a;
+            border-radius: 16px;
+            padding: 16px;
+            gap: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyberpunk-accordion::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, #4f46e5, #06b6d4, #10b981, #f59e0b);
+            background-size: 400% 400%;
+            animation: cyberpunkGlow 4s ease-in-out infinite;
+            border-radius: 16px;
+            z-index: -1;
+        }
+
+        @keyframes cyberpunkGlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .cyberpunk-accordion .cyber-panel {
+            flex: 1;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+
+        .cyberpunk-accordion .cyber-panel:hover {
+            flex: 2.5;
+            border-color: #4f46e5;
+            box-shadow: 
+                0 0 20px #4f46e5,
+                inset 0 0 20px rgba(79, 70, 229, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .cyberpunk-accordion .cyber-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4f46e5, transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cyberpunk-accordion .cyber-panel:hover::before {
+            left: 100%;
+        }
+
+        .cyberpunk-accordion .cyber-content {
+            padding: 24px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .cyberpunk-accordion .cyber-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            color: #4f46e5;
+            filter: drop-shadow(0 0 8px #4f46e5);
+            transition: all 0.3s ease;
+        }
+
+        .cyberpunk-accordion .cyber-panel:hover .cyber-icon {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 16px #4f46e5);
+        }
+
+        .cyberpunk-accordion .cyber-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #e2e8f0;
+        }
+
+        .cyberpunk-accordion .cyber-desc {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease 0.1s;
+        }
+
+        .cyberpunk-accordion .cyber-panel:hover .cyber-desc {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 4. 磁吸滚动手风琴 */
+        .magnetic-accordion {
+            width: 100%;
+            height: 280px;
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            gap: 16px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-radius: 16px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .magnetic-accordion::-webkit-scrollbar {
+            display: none;
+        }
+
+        .magnetic-accordion .magnetic-panel {
+            min-width: 120px;
+            width: 120px;
+            height: 100%;
+            background: white;
+            border-radius: 12px;
+            scroll-snap-align: start;
+            position: relative;
+            cursor: grab;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .magnetic-accordion .magnetic-panel:active {
+            cursor: grabbing;
+        }
+
+        .magnetic-accordion .magnetic-panel.expanded {
+            min-width: 300px;
+            width: 300px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            transform: translateY(-8px);
+        }
+
+        .magnetic-accordion .magnetic-content {
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .magnetic-accordion .magnetic-icon {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            color: #4f46e5;
+            transition: all 0.3s ease;
+        }
+
+        .magnetic-accordion .magnetic-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .magnetic-accordion .magnetic-desc {
+            font-size: 0.8rem;
+            color: #6b7280;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .magnetic-accordion .magnetic-panel.expanded .magnetic-desc {
+            opacity: 1;
+            max-height: 100px;
+        }
+
+        .magnetic-accordion .magnetic-panel.expanded .magnetic-icon {
+            transform: scale(1.1);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .accordion-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .accordion-card {
+                padding: 20px;
+            }
+
+            .enterprise-accordion,
+            .perspective-accordion,
+            .cyberpunk-accordion {
+                height: 250px;
+            }
+
+            .magnetic-accordion {
+                height: 220px;
+            }
+        }
+
+        /* 全宽展示区域 */
+        .full-width-section {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            padding: 40px 20px;
+            background: #1f2937;
+            color: white;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .full-width-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 单独的全宽展示区域样式变体 */
+        .full-width-section.variant-1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .full-width-section.variant-2 {
+            background: #0a0a0a;
+        }
+
+        .full-width-section.variant-3 {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: #1f2937;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="section-title">企业级手风琴组件展示</h1>
+        
+        <!-- 企业图片手风琴 - 全宽展示 -->
+        <div class="full-width-section">
+            <div class="full-width-content">
+                <div class="tech-label">Hover触发 | flex-grow: 1→1.8 | transform: scale(1.05)</div>
+                <h2 class="card-title" style="color: white; margin-bottom: 30px;">企业品牌展示</h2>
+                <div class="enterprise-accordion">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Modern Office">
+                        <div class="overlay">
+                            <h3>企业总部</h3>
+                            <p>现代化办公环境，创新团队协作</p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Team Meeting">
+                        <div class="overlay">
+                            <h3>团队协作</h3>
+                            <p>专业团队，高效协作</p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Innovation">
+                        <div class="overlay">
+                            <h3>技术创新</h3>
+                            <p>前沿技术，持续创新</p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Customer Service">
+                        <div class="overlay">
+                            <h3>客户服务</h3>
+                            <p>优质服务，客户至上</p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Business Growth">
+                        <div class="overlay">
+                            <h3>业务发展</h3>
+                            <p>稳健发展，持续增长</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增企业手风琴变体 - 全宽展示 -->
+        
+        <!-- 3D透视倾斜手风琴 -->
+        <div class="full-width-section variant-1">
+            <div class="full-width-content">
+                <div class="tech-label">perspective: 1200px | rotateY(-8deg) | translateZ(20px)</div>
+                <h2 class="card-title" style="color: white; margin-bottom: 30px;">3D透视倾斜展示</h2>
+                <div class="perspective-accordion">
+                    <div class="panel">
+                        <div class="panel-content">
+                            <div class="panel-icon">🏢</div>
+                            <div class="panel-title">企业架构</div>
+                            <div class="panel-desc">现代化组织架构设计，扁平化管理体系</div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-content">
+                            <div class="panel-icon">💼</div>
+                            <div class="panel-title">商业策略</div>
+                            <div class="panel-desc">数据驱动决策，精准市场定位</div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-content">
+                            <div class="panel-icon">🚀</div>
+                            <div class="panel-title">创新发展</div>
+                            <div class="panel-desc">技术创新引领，持续产品迭代</div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-content">
+                            <div class="panel-icon">🎯</div>
+                            <div class="panel-title">目标达成</div>
+                            <div class="panel-desc">KPI量化管理，目标导向执行</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 赛博朋克发光手风琴 -->
+        <div class="full-width-section variant-2">
+            <div class="full-width-content">
+                <div class="tech-label" style="color: white;">box-shadow: 0 0 20px #4f46e5 | filter: drop-shadow | @keyframes</div>
+                <h2 class="card-title" style="color: white; margin-bottom: 30px;">赛博朋克科技风</h2>
+                <div class="cyberpunk-accordion">
+                    <div class="cyber-panel">
+                        <div class="cyber-content">
+                            <div class="cyber-icon">⚡</div>
+                            <div class="cyber-title">AI智能</div>
+                            <div class="cyber-desc">机器学习算法优化，智能决策支持系统</div>
+                        </div>
+                    </div>
+                    <div class="cyber-panel">
+                        <div class="cyber-content">
+                            <div class="cyber-icon">🔒</div>
+                            <div class="cyber-title">安全防护</div>
+                            <div class="cyber-desc">多层加密技术，零信任安全架构</div>
+                        </div>
+                    </div>
+                    <div class="cyber-panel">
+                        <div class="cyber-content">
+                            <div class="cyber-icon">🌐</div>
+                            <div class="cyber-title">云端服务</div>
+                            <div class="cyber-desc">分布式云架构，弹性扩容能力</div>
+                        </div>
+                    </div>
+                    <div class="cyber-panel">
+                        <div class="cyber-content">
+                            <div class="cyber-icon">📊</div>
+                            <div class="cyber-title">数据分析</div>
+                            <div class="cyber-desc">实时数据处理，可视化报表系统</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 磁吸滚动手风琴 -->
+        <div class="full-width-section variant-3">
+            <div class="full-width-content">
+                <div class="tech-label">scroll-snap-type: x mandatory | cursor: grab | min-width: 120px→300px</div>
+                <h2 class="card-title" style="color: #1f2937; margin-bottom: 30px;">磁吸滚动时间轴</h2>
+                <div class="magnetic-accordion" id="magneticAccordion">
+                    <div class="magnetic-panel" onclick="toggleMagnetic(this)">
+                        <div class="magnetic-content">
+                            <div class="magnetic-icon">📅</div>
+                            <div class="magnetic-title">Q1规划</div>
+                            <div class="magnetic-desc">制定年度战略目标，启动核心项目</div>
+                        </div>
+                    </div>
+                    <div class="magnetic-panel" onclick="toggleMagnetic(this)">
+                        <div class="magnetic-content">
+                            <div class="magnetic-icon">🎯</div>
+                            <div class="magnetic-title">Q2执行</div>
+                            <div class="magnetic-desc">推进关键里程碑，优化运营流程</div>
+                        </div>
+                    </div>
+                    <div class="magnetic-panel" onclick="toggleMagnetic(this)">
+                        <div class="magnetic-content">
+                            <div class="magnetic-icon">📈</div>
+                            <div class="magnetic-title">Q3增长</div>
+                            <div class="magnetic-desc">扩大市场份额，提升品牌影响力</div>
+                        </div>
+                    </div>
+                    <div class="magnetic-panel" onclick="toggleMagnetic(this)">
+                        <div class="magnetic-content">
+                            <div class="magnetic-icon">🏆</div>
+                            <div class="magnetic-title">Q4收获</div>
+                            <div class="magnetic-desc">总结年度成果，规划未来发展</div>
+                        </div>
+                    </div>
+                    <div class="magnetic-panel" onclick="toggleMagnetic(this)">
+                        <div class="magnetic-content">
+                            <div class="magnetic-icon">🔮</div>
+                            <div class="magnetic-title">未来展望</div>
+                            <div class="magnetic-desc">前瞻性布局，创新技术储备</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 磁吸滚动手风琴交互
+        function toggleMagnetic(element) {
+            const allPanels = document.querySelectorAll('.magnetic-panel');
+            const isExpanded = element.classList.contains('expanded');
+            
+            // 关闭所有面板
+            allPanels.forEach(panel => {
+                panel.classList.remove('expanded');
+            });
+            
+            // 如果当前面板未展开，则展开它
+            if (!isExpanded) {
+                element.classList.add('expanded');
+                // 滚动到展开的面板
+                element.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest',
+                    inline: 'center'
+                });
+            }
+        }
+
+        // 添加触摸滑动支持
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        const magneticAccordion = document.getElementById('magneticAccordion');
+
+        magneticAccordion.addEventListener('mousedown', (e) => {
+            isDown = true;
+            magneticAccordion.style.cursor = 'grabbing';
+            startX = e.pageX - magneticAccordion.offsetLeft;
+            scrollLeft = magneticAccordion.scrollLeft;
+        });
+
+        magneticAccordion.addEventListener('mouseleave', () => {
+            isDown = false;
+            magneticAccordion.style.cursor = 'grab';
+        });
+
+        magneticAccordion.addEventListener('mouseup', () => {
+            isDown = false;
+            magneticAccordion.style.cursor = 'grab';
+        });
+
+        magneticAccordion.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - magneticAccordion.offsetLeft;
+            const walk = (x - startX) * 2;
+            magneticAccordion.scrollLeft = scrollLeft - walk;
+        });
+    </script>
+</body>
+</html>

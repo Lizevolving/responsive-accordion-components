@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion Components Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f8fafc;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #4f46e5;
+        }
+
+        /* FAQ Accordions Layout - 2x3 Grid */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        /* FAQ Component Cards */
+        .faq-component {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .faq-component:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        .component-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #374151;
+            text-align: center;
+        }
+
+        /* FAQ Style 1 - Simple Color Change */
+        .faq-style-1 {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-style-1 .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 0;
+        }
+
+        .faq-style-1 .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-style-1 .faq-question {
+            background: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
+            padding: 20px 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+
+        .faq-style-1 .faq-question:hover {
+            color: #4f46e5;
+        }
+
+        .faq-style-1 .faq-icon {
+            width: 16px;
+            height: 16px;
+            color: #6b7280;
+            transition: transform 0.3s ease, color 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .faq-style-1 .faq-icon.active {
+            transform: rotate(90deg);
+            color: #4f46e5;
+        }
+
+        .faq-style-1 .faq-answer {
+            background: transparent;
+            color: #6b7280;
+            line-height: 1.7;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            padding: 0;
+        }
+
+        .faq-style-1 .faq-answer.active {
+            max-height: 200px;
+            opacity: 1;
+            padding-bottom: 20px;
+        }
+
+        /* FAQ Style 2 - Tab Style */
+        .faq-style-2 {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-style-2 .tab {
+            width: 100%;
+            color: white;
+            overflow: hidden;
+        }
+
+        .faq-style-2 .tab-label {
+            display: flex;
+            justify-content: space-between;
+            padding: 1em;
+            background: #2c3e50;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .faq-style-2 .tab-label:hover {
+            background: #1e2832;
+        }
+
+        .faq-style-2 .tab-label::after {
+            content: "❯";
+            width: 1em;
+            height: 1em;
+            text-align: center;
+            transition: all 0.35s;
+        }
+
+        .faq-style-2 .tab-content {
+            max-height: 0;
+            padding: 0 1em;
+            color: #2c3e50;
+            background: white;
+            transition: all 0.35s;
+            overflow: hidden;
+        }
+
+        .faq-style-2 input {
+            position: absolute;
+            opacity: 0;
+            z-index: -1;
+        }
+
+        .faq-style-2 input:checked + .tab-label {
+            background: #1e2832;
+        }
+
+        .faq-style-2 input:checked + .tab-label::after {
+            transform: rotate(90deg);
+        }
+
+        .faq-style-2 input:checked ~ .tab-content {
+            max-height: 100vh;
+            padding: 1em;
+        }
+
+        /* FAQ Style 3 - Shadow Box Effect */
+        .faq-style-3 {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-style-3 .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 0;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .faq-style-3 .faq-item:last-child {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .faq-style-3 .faq-item:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            border-color: transparent;
+        }
+
+        .faq-style-3 .faq-question {
+            background: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
+            padding: 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .faq-style-3 .faq-question:hover {
+            color: #4f46e5;
+            background: rgba(79, 70, 229, 0.02);
+        }
+
+        .faq-style-3 .faq-icon {
+            width: 16px;
+            height: 16px;
+            color: #6b7280;
+            transition: transform 0.3s ease, color 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .faq-style-3 .faq-icon.active {
+            transform: rotate(90deg);
+            color: #4f46e5;
+        }
+
+        .faq-style-3 .faq-answer {
+            background: transparent;
+            color: #6b7280;
+            line-height: 1.7;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            padding: 0 20px;
+        }
+
+        .faq-style-3 .faq-answer.active {
+            max-height: 200px;
+            opacity: 1;
+            padding: 0 20px 20px 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .image-accordion {
+                height: 300px;
+            }
+            
+            .component-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="section-title">手风琴组件样式库</h1>
+        
+        <!-- FAQ Accordions Section -->
+        <div class="faq-grid">
+            <!-- FAQ Style 1: Simple Color Change -->
+            <div class="faq-component faq-style-1">
+                <h3 class="component-title">颜色变化效果</h3>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ1(this)">
+                        <span>基础交互原理</span>
+                        <span class="faq-icon">›</span>
+                    </button>
+                    <div class="faq-answer">
+                        通过CSS伪类:hover和JavaScript事件监听实现颜色过渡效果，提供即时的视觉反馈。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ1(this)">
+                        <span>状态管理机制</span>
+                        <span class="faq-icon">›</span>
+                    </button>
+                    <div class="faq-answer">
+                        使用classList方法动态添加和移除CSS类，确保组件状态的准确切换。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ1(this)">
+                        <span>性能优化要点</span>
+                        <span class="faq-icon">›</span>
+                    </button>
+                    <div class="faq-answer">
+                        采用CSS transform和opacity属性替代会触发重排的属性，保证动画流畅性。
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Style 2: Tab Style -->
+            <div class="faq-component faq-style-2">
+                <h3 class="component-title" style="color: white; padding: 0 1em;">卡片标签样式</h3>
+                <div class="tab">
+                    <input type="checkbox" id="chck1">
+                    <label class="tab-label" for="chck1">纯CSS实现方案</label>
+                    <div class="tab-content">
+                        利用CSS :checked伪类选择器配合相邻兄弟选择器，实现无JavaScript的交互效果。
+                    </div>
+                </div>
+                <div class="tab">
+                    <input type="checkbox" id="chck2">
+                    <label class="tab-label" for="chck2">输入元素隐藏技巧</label>
+                    <div class="tab-content">
+                        通过position:absolute和opacity:0隐藏input元素，保持可访问性的同时美化界面。
+                    </div>
+                </div>
+                <div class="tab">
+                    <input type="checkbox" id="chck3">
+                    <label class="tab-label" for="chck3">标签关联机制</label>
+                    <div class="tab-content">
+                        使用label的for属性与input的id建立关联，确保点击标签能触发输入控件。
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Style 3: Shadow Box Effect -->
+            <div class="faq-component faq-style-3">
+                <h3 class="component-title">阴影盒子效果</h3>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ3(this)">
+                        <span>盒子阴影实现</span>
+                        <span class="faq-icon">›</span>
+                    </button>
+                    <div class="faq-answer">
+                        使用box-shadow属性创建多层阴影效果，通过悬停时的transform:translateY营造立体感。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ3(this)">
+                        <span>边框渐变技术</span>
+                        <span class="faq-icon">›</span>
+                    </button>
+                    <div class="faq-answer">
+                        结合border-color的过渡动画，在悬停状态下改变边框颜色以强调焦点元素。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ3(this)">
+                        <span>层叠上下文管理</span>
+                        <span class="faq-icon">›</span>
+                    </button>
+                    <div class="faq-answer">
+                        通过z-index和position属性管理元素层级，确保阴影效果不被其他元素遮挡。
+                    </div>
+                </div>
+            </div>
+    <script>
+        // FAQ Style 1 JavaScript
+        function toggleFAQ1(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.faq-icon');
+            const isActive = answer.classList.contains('active');
+            
+            // Close all other FAQs in this style
+            const allAnswers = element.closest('.faq-style-1').querySelectorAll('.faq-answer');
+            const allIcons = element.closest('.faq-style-1').querySelectorAll('.faq-icon');
+            
+            allAnswers.forEach((ans, index) => {
+                if (ans !== answer && ans.classList.contains('active')) {
+                    ans.classList.remove('active');
+                    allIcons[index].classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ
+            if (isActive) {
+                answer.classList.remove('active');
+                icon.classList.remove('active');
+            } else {
+                answer.classList.add('active');
+                icon.classList.add('active');
+            }
+        }
+
+        // FAQ Style 3 JavaScript (with shadow effect)
+        function toggleFAQ3(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.faq-icon');
+            const isActive = answer.classList.contains('active');
+            
+            // Close all other FAQs in this style
+            const allAnswers = element.closest('.faq-style-3').querySelectorAll('.faq-answer');
+            const allIcons = element.closest('.faq-style-3').querySelectorAll('.faq-icon');
+            
+            allAnswers.forEach((ans, index) => {
+                if (ans !== answer && ans.classList.contains('active')) {
+                    ans.classList.remove('active');
+                    allIcons[index].classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ
+            if (isActive) {
+                answer.classList.remove('active');
+                icon.classList.remove('active');
+            } else {
+                answer.classList.add('active');
+                icon.classList.add('active');
+            }
+        }
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const activeElement = document.activeElement;
+                if (activeElement.classList.contains('faq-question')) {
+                    e.preventDefault();
+                    activeElement.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+
