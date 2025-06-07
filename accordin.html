@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accordion Components Showcase</title>
+    <title>手风琴组件界面</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -20,19 +21,74 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
+            height: 100%;
+        }
+
+        /* 导航栏样式 */
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #4f46e5;
+        }
+
+        .nav-link.active {
+            color: #4f46e5;
+            border-bottom: 2px solid #4f46e5;
+            padding-bottom: 2px;
+        }
+
+        /* GitHub Link */
+        .github-link {
+            color: #6b7280;
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .github-link:hover {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .github-link i {
+            font-size: 1.125rem;
         }
 
         .section-title {
-            font-size: 2rem;
+            font-size: 1.75rem;
             font-weight: 700;
             text-align: center;
-            color: #1f2937;
-            margin-bottom: 40px;
+            color: #111827;
+            margin-bottom: 30px;
             position: relative;
         }
-
         .section-title::after {
             content: '';
             position: absolute;
@@ -41,24 +97,34 @@
             transform: translateX(-50%);
             width: 60px;
             height: 3px;
-            background: #4f46e5;
+            background: #6366f1;
+            transition: width 0.3s ease;
+        }
+        .section-title:hover::after {
+            width: 80px;
+        }
+
+        /* 手机端适配 */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 1.5rem;
+            }
         }
 
         /* FAQ Accordions Layout - 2x3 Grid */
         .faq-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 40px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 关键修改：4列布局 */
+            gap: 20px;  /* 适当缩小间隙 */
+            margin-top: 20px;  /* 减少顶部间距 */
         }
 
         /* FAQ Component Cards */
         .faq-component {
             background: white;
             border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 25px;  /* 减少内边距 */
+            box-shadow: 0 4px 12px -2px rgba(0,0,0,0.08);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
@@ -117,6 +183,11 @@
             height: 16px;
             color: #6b7280;
             transition: transform 0.3s ease, color 0.2s ease;
+            display: inline-flex; /* 替代 grid 方案，更简单 */
+            justify-content: center;
+            align-items: center;
+            transform-origin: center; /* 新增：确保以中心点旋转 */
+            margin-left: 8px; /* 新增：增加间距避免文字挤压 */
             flex-shrink: 0;
         }
 
@@ -161,9 +232,15 @@
             justify-content: space-between;
             padding: 1em;
             background: #2c3e50;
-            font-weight: bold;
             cursor: pointer;
             transition: background 0.2s ease;
+            margin-bottom: 8px; /* 增加间距 */
+            border-radius: 8px; /* 圆角 */
+            overflow: hidden; /* 防止内容溢出 */
+        }
+
+        .faq-style-2 .tab:last-child {
+            margin-bottom: 0; /* 最后一个不需要间距 */
         }
 
         .faq-style-2 .tab-label:hover {
@@ -175,7 +252,7 @@
             width: 1em;
             height: 1em;
             text-align: center;
-            transition: all 0.35s;
+            transition: transform 0.35s ease; /* 只控制旋转，避免影响其他属性 */
         }
 
         .faq-style-2 .tab-content {
@@ -183,7 +260,7 @@
             padding: 0 1em;
             color: #2c3e50;
             background: white;
-            transition: all 0.35s;
+            transition: max-height 0.3s ease, padding 0.3s ease; /* 分开控制 */
             overflow: hidden;
         }
 
@@ -303,6 +380,17 @@
 </head>
 <body>
     <div class="container">
+        <!-- 导航栏 -->
+        <nav class="nav-header">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">企业级手风琴组件展示</a>
+                <a href="accordin.html" class="nav-link active">手风琴组件界面</a>
+            </div>
+            <a href="https://github.com/Lizevolving/responsive-accordion-components" class="github-link" target="_blank" rel="noopener" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+        </nav>
+        
         <h1 class="section-title">手风琴组件样式库</h1>
         
         <!-- FAQ Accordions Section -->
@@ -313,7 +401,7 @@
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ1(this)">
                         <span>基础交互原理</span>
-                        <span class="faq-icon">›</span>
+                        <span class="faq-icon">＋</span>
                     </button>
                     <div class="faq-answer">
                         通过CSS伪类:hover和JavaScript事件监听实现颜色过渡效果，提供即时的视觉反馈。
@@ -322,7 +410,7 @@
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ1(this)">
                         <span>状态管理机制</span>
-                        <span class="faq-icon">›</span>
+                        <span class="faq-icon">＋</span>
                     </button>
                     <div class="faq-answer">
                         使用classList方法动态添加和移除CSS类，确保组件状态的准确切换。
@@ -331,7 +419,7 @@
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ1(this)">
                         <span>性能优化要点</span>
-                        <span class="faq-icon">›</span>
+                        <span class="faq-icon">＋</span>
                     </button>
                     <div class="faq-answer">
                         采用CSS transform和opacity属性替代会触发重排的属性，保证动画流畅性。
@@ -397,72 +485,166 @@
                 </div>
             </div>
     <script>
-        // FAQ Style 1 JavaScript
+        // FAQ交互函数
         function toggleFAQ1(element) {
             const answer = element.nextElementSibling;
             const icon = element.querySelector('.faq-icon');
             const isActive = answer.classList.contains('active');
             
-            // Close all other FAQs in this style
-            const allAnswers = element.closest('.faq-style-1').querySelectorAll('.faq-answer');
-            const allIcons = element.closest('.faq-style-1').querySelectorAll('.faq-icon');
+            element.closest('.faq-style-1').querySelectorAll('.faq-answer, .faq-icon').forEach(el => el.classList.remove('active'));
             
-            allAnswers.forEach((ans, index) => {
-                if (ans !== answer && ans.classList.contains('active')) {
-                    ans.classList.remove('active');
-                    allIcons[index].classList.remove('active');
-                }
-            });
-            
-            // Toggle current FAQ
-            if (isActive) {
-                answer.classList.remove('active');
-                icon.classList.remove('active');
-            } else {
+            if (!isActive) {
                 answer.classList.add('active');
                 icon.classList.add('active');
             }
         }
 
-        // FAQ Style 3 JavaScript (with shadow effect)
         function toggleFAQ3(element) {
             const answer = element.nextElementSibling;
             const icon = element.querySelector('.faq-icon');
             const isActive = answer.classList.contains('active');
             
-            // Close all other FAQs in this style
-            const allAnswers = element.closest('.faq-style-3').querySelectorAll('.faq-answer');
-            const allIcons = element.closest('.faq-style-3').querySelectorAll('.faq-icon');
+            element.closest('.faq-style-3').querySelectorAll('.faq-answer, .faq-icon').forEach(el => el.classList.remove('active'));
             
-            allAnswers.forEach((ans, index) => {
-                if (ans !== answer && ans.classList.contains('active')) {
-                    ans.classList.remove('active');
-                    allIcons[index].classList.remove('active');
-                }
-            });
-            
-            // Toggle current FAQ
-            if (isActive) {
-                answer.classList.remove('active');
-                icon.classList.remove('active');
-            } else {
+            if (!isActive) {
                 answer.classList.add('active');
                 icon.classList.add('active');
             }
         }
 
-        // Keyboard navigation support
+        // 键盘支持
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                const activeElement = document.activeElement;
-                if (activeElement.classList.contains('faq-question')) {
-                    e.preventDefault();
-                    activeElement.click();
-                }
+            if ((e.key === 'Enter' || e.key === ' ') && document.activeElement.classList.contains('faq-question')) {
+                e.preventDefault();
+                document.activeElement.click();
             }
         });
     </script>
 </body>
 </html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion</title>
+    <style>
+        body {  
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f9fa;
+            padding: 20px;
+            line-height: 1.5;
+            }
+
+        /* Accordion */
+        .ac-container {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .ac-container label {
+            height: 40px !important;
+            line-height: 25px !important;
+            font-size: 16px;  /* 加大 */
+            font-weight: 500; /* 加粗 */
+            font-family: 'Open Sans','Arial Narrow',Arial,sans-serif !important;
+            padding: 5px 20px;
+            position: relative;
+            z-index: 20;
+            display: block;
+            height: 30px;
+            cursor: pointer;
+            color: #777;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+            line-height: 33px;
+            font-size: 19px;
+            background: #fff;
+            box-shadow: 0 0 0 1px rgba(155,155,155,0.3),1px 0 0 rgba(255,255,255,0.9) inset,0 2px 2px rgba(0,0,0,0.1);
+        }
+
+        .ac-container label:hover {
+            background: #fff;
+        }
+
+        .ac-container input:checked + label {
+            background: #f1f2f3;
+            box-shadow: 0 0 0 1px rgba(155,155,155,0.3);
+        }
+
+        .ac-container input {
+            display: none;
+        }
+
+        .ac-container article {
+            background: rgba(255,255,255,0.5);
+            margin-top: -1px;
+            overflow: hidden;
+            height: 0;
+            transition: height 0.3s ease-in-out;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .ac-container article p {
+            padding: 20px;
+            font-size: 15px;  /* 加大 */
+            font-weight: 400; /* 正常粗细（内容不用太粗） */
+            color: #333;      /* 深灰，比纯黑柔和 */
+            line-height: 1.5; /* 更好的行距 */
+        }
+
+        .ac-container input:checked ~ article.ac-small {
+            height: 140px;
+        }
+
+        .ac-container input:checked ~ article.ac-medium {
+            height: 180px;
+        }
+
+        .ac-container input:checked ~ article.ac-large {
+            height: 230px;
+        }
+
+    </style>
+</head>
+<body>
+    <section class="ac-container">
+        <div>
+            <input id="ac-1" name="accordion-1" type="radio" checked>
+            <label for="ac-1">Option 1</label>
+            <article class="ac-small">
+                <p>Content for option 1.</p>
+            </article>
+        </div>
+        <div>
+            <input id="ac-2" name="accordion-1" type="radio">
+            <label for="ac-2">Option 2</label>
+            <article class="ac-medium">
+                <p>Content for option 2.</p>
+            </article>
+        </div>
+        <div>
+            <input id="ac-3" name="accordion-1" type="radio">
+            <label for="ac-3">Option 3</label>
+            <article class="ac-large">
+                <p>Content for option 3.</p>
+            </article>
+        </div>
+        <div>
+            <input id="ac-4" name="accordion-1" type="radio">
+            <label for="ac-4">Option 4</label>
+            <article class="ac-large">
+                <p>Content for option 4.</p>
+            </article>
+        </div>
+    </section>
+</body>
+</html>
+
 
 
