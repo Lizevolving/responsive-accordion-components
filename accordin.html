@@ -111,12 +111,12 @@
             }
         }
 
-        /* FAQ Accordions Layout - 2x3 Grid */
+        /* 手风琴组件网格布局 - 响应式2x2网格 */
         .faq-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 关键修改：4列布局 */
-            gap: 20px;  /* 适当缩小间隙 */
-            margin-top: 20px;  /* 减少顶部间距 */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 自适应列数，最小300px宽度 */
+            gap: 20px;  /* 组件间距 */
+            margin-top: 20px;  /* 顶部间距 */
         }
 
         /* FAQ Component Cards */
@@ -182,18 +182,18 @@
             width: 16px;
             height: 16px;
             color: #6b7280;
-            transition: transform 0.3s ease, color 0.2s ease;
-            display: inline-flex; /* 替代 grid 方案，更简单 */
+            transition: transform 0.3s ease, color 0.2s ease; /* 旋转和颜色过渡动画 */
+            display: inline-flex; /* 弹性布局居中对齐 */
             justify-content: center;
             align-items: center;
-            transform-origin: center; /* 新增：确保以中心点旋转 */
-            margin-left: 8px; /* 新增：增加间距避免文字挤压 */
-            flex-shrink: 0;
+            transform-origin: center; /* 设置旋转中心点 */
+            margin-left: 8px; /* 与文字保持间距 */
+            flex-shrink: 0; /* 防止图标被压缩 */
         }
 
         .faq-style-1 .faq-icon.active {
-            transform: rotate(90deg);
-            color: #4f46e5;
+            transform: rotate(90deg); /* 激活状态90度旋转 */
+            color: #4f46e5; /* 激活状态颜色变化 */
         }
 
         .faq-style-1 .faq-answer {
@@ -400,29 +400,29 @@
                 <h3 class="component-title">颜色变化效果</h3>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ1(this)">
-                        <span>基础交互原理</span>
+                        <span>事件监听机制</span>
                         <span class="faq-icon">＋</span>
                     </button>
                     <div class="faq-answer">
-                        通过CSS伪类:hover和JavaScript事件监听实现颜色过渡效果，提供即时的视觉反馈。
+                        addEventListener绑定click事件，通过event.target获取触发元素，实现精确的交互响应。
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ1(this)">
-                        <span>状态管理机制</span>
+                        <span>DOM操作核心</span>
                         <span class="faq-icon">＋</span>
                     </button>
                     <div class="faq-answer">
-                        使用classList方法动态添加和移除CSS类，确保组件状态的准确切换。
+                        nextElementSibling获取相邻元素，classList.toggle()切换CSS类，实现状态管理。
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ1(this)">
-                        <span>性能优化要点</span>
+                        <span>CSS过渡动画</span>
                         <span class="faq-icon">＋</span>
                     </button>
                     <div class="faq-answer">
-                        采用CSS transform和opacity属性替代会触发重排的属性，保证动画流畅性。
+                        transition属性控制height和opacity变化，cubic-bezier缓动函数提供自然过渡效果。
                     </div>
                 </div>
             </div>
@@ -432,23 +432,23 @@
                 <h3 class="component-title" style="color: white; padding: 0 1em;">卡片标签样式</h3>
                 <div class="tab">
                     <input type="checkbox" id="chck1">
-                    <label class="tab-label" for="chck1">纯CSS实现方案</label>
+                    <label class="tab-label" for="chck1">:checked伪类选择器</label>
                     <div class="tab-content">
-                        利用CSS :checked伪类选择器配合相邻兄弟选择器，实现无JavaScript的交互效果。
+                        input:checked + label选择器匹配选中状态，无需JavaScript即可实现状态切换。
                     </div>
                 </div>
                 <div class="tab">
                     <input type="checkbox" id="chck2">
-                    <label class="tab-label" for="chck2">输入元素隐藏技巧</label>
+                    <label class="tab-label" for="chck2">兄弟选择器应用</label>
                     <div class="tab-content">
-                        通过position:absolute和opacity:0隐藏input元素，保持可访问性的同时美化界面。
+                        ~ 通用兄弟选择器控制后续元素样式，实现checkbox状态向下传递的级联效果。
                     </div>
                 </div>
                 <div class="tab">
                     <input type="checkbox" id="chck3">
-                    <label class="tab-label" for="chck3">标签关联机制</label>
+                    <label class="tab-label" for="chck3">表单元素关联</label>
                     <div class="tab-content">
-                        使用label的for属性与input的id建立关联，确保点击标签能触发输入控件。
+                        label[for]与input[id]建立语义关联，点击标签自动触发表单控件，提升可访问性。
                     </div>
                 </div>
             </div>
@@ -458,41 +458,43 @@
                 <h3 class="component-title">阴影盒子效果</h3>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ3(this)">
-                        <span>盒子阴影实现</span>
+                        <span>多层阴影技术</span>
                         <span class="faq-icon">›</span>
                     </button>
                     <div class="faq-answer">
-                        使用box-shadow属性创建多层阴影效果，通过悬停时的transform:translateY营造立体感。
+                        box-shadow叠加多个阴影值，不同偏移和模糊半径创建深度层次，模拟真实光照效果。
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ3(this)">
-                        <span>边框渐变技术</span>
+                        <span>transform变换组合</span>
                         <span class="faq-icon">›</span>
                     </button>
                     <div class="faq-answer">
-                        结合border-color的过渡动画，在悬停状态下改变边框颜色以强调焦点元素。
+                        translateY()垂直位移配合scale()缩放，:hover状态下组合变换营造悬浮交互效果。
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ3(this)">
-                        <span>层叠上下文管理</span>
+                        <span>层叠上下文控制</span>
                         <span class="faq-icon">›</span>
                     </button>
                     <div class="faq-answer">
-                        通过z-index和position属性管理元素层级，确保阴影效果不被其他元素遮挡。
+                        z-index配合position:relative建立层叠上下文，确保阴影元素正确显示在目标层级。
                     </div>
                 </div>
             </div>
     <script>
-        // FAQ交互函数
+        // JavaScript驱动的手风琴交互函数
         function toggleFAQ1(element) {
-            const answer = element.nextElementSibling;
-            const icon = element.querySelector('.faq-icon');
-            const isActive = answer.classList.contains('active');
+            const answer = element.nextElementSibling; // 获取相邻的答案元素
+            const icon = element.querySelector('.faq-icon'); // 获取图标元素
+            const isActive = answer.classList.contains('active'); // 检查当前状态
             
+            // 关闭同组内所有其他项目，实现手风琴效果
             element.closest('.faq-style-1').querySelectorAll('.faq-answer, .faq-icon').forEach(el => el.classList.remove('active'));
             
+            // 如果当前项未激活，则激活它
             if (!isActive) {
                 answer.classList.add('active');
                 icon.classList.add('active');
@@ -500,23 +502,26 @@
         }
 
         function toggleFAQ3(element) {
-            const answer = element.nextElementSibling;
-            const icon = element.querySelector('.faq-icon');
-            const isActive = answer.classList.contains('active');
+            const answer = element.nextElementSibling; // DOM遍历获取目标元素
+            const icon = element.querySelector('.faq-icon'); // 查询子元素
+            const isActive = answer.classList.contains('active'); // 状态检测
             
+            // 单选模式：先清除所有激活状态
             element.closest('.faq-style-3').querySelectorAll('.faq-answer, .faq-icon').forEach(el => el.classList.remove('active'));
             
+            // 条件激活：避免重复点击
             if (!isActive) {
                 answer.classList.add('active');
                 icon.classList.add('active');
             }
         }
 
-        // 键盘支持
+        // 键盘可访问性支持
         document.addEventListener('keydown', (e) => {
+            // Enter或空格键触发点击事件
             if ((e.key === 'Enter' || e.key === ' ') && document.activeElement.classList.contains('faq-question')) {
-                e.preventDefault();
-                document.activeElement.click();
+                e.preventDefault(); // 阻止默认行为
+                document.activeElement.click(); // 模拟点击
             }
         });
     </script>
@@ -578,15 +583,15 @@
         }
 
         .ac-container input {
-            display: none;
+            display: none; /* 隐藏原生radio按钮，保留功能 */
         }
 
         .ac-container article {
             background: rgba(255,255,255,0.5);
             margin-top: -1px;
-            overflow: hidden;
-            height: 0;
-            transition: height 0.3s ease-in-out;
+            overflow: hidden; /* 隐藏超出内容，配合高度动画 */
+            height: 0; /* 初始高度为0，收起状态 */
+            transition: height 0.3s ease-in-out; /* 高度变化的平滑过渡 */
             border-radius: 0 0 8px 8px;
         }
 
@@ -598,16 +603,17 @@
             line-height: 1.5; /* 更好的行距 */
         }
 
+        /* Radio选中状态控制不同高度展开 */
         .ac-container input:checked ~ article.ac-small {
-            height: 140px;
+            height: 140px; /* 小内容区域高度 */
         }
 
         .ac-container input:checked ~ article.ac-medium {
-            height: 180px;
+            height: 180px; /* 中等内容区域高度 */
         }
 
         .ac-container input:checked ~ article.ac-large {
-            height: 230px;
+            height: 230px; /* 大内容区域高度 */
         }
 
     </style>
@@ -616,30 +622,30 @@
     <section class="ac-container">
         <div>
             <input id="ac-1" name="accordion-1" type="radio" checked>
-            <label for="ac-1">Option 1</label>
+            <label for="ac-1">Radio互斥机制</label>
             <article class="ac-small">
-                <p>Content for option 1.</p>
+                <p>name属性相同的radio按钮形成互斥组，选中一个自动取消其他选项，确保单选逻辑。</p>
             </article>
         </div>
         <div>
             <input id="ac-2" name="accordion-1" type="radio">
-            <label for="ac-2">Option 2</label>
+            <label for="ac-2">高度动态控制</label>
             <article class="ac-medium">
-                <p>Content for option 2.</p>
+                <p>:checked伪类配合~选择器，根据不同内容量设置ac-small/medium/large类，实现自适应高度展开。</p>
             </article>
         </div>
         <div>
             <input id="ac-3" name="accordion-1" type="radio">
-            <label for="ac-3">Option 3</label>
+            <label for="ac-3">CSS过渡动画</label>
             <article class="ac-large">
-                <p>Content for option 3.</p>
+                <p>transition: height 0.3s ease-in-out控制展开收起动画，ease-in-out缓动函数提供平滑的视觉体验。</p>
             </article>
         </div>
         <div>
             <input id="ac-4" name="accordion-1" type="radio">
-            <label for="ac-4">Option 4</label>
+            <label for="ac-4">语义化HTML结构</label>
             <article class="ac-large">
-                <p>Content for option 4.</p>
+                <p>使用语义化的section、article标签构建内容结构，label[for]与input[id]关联提升可访问性支持。</p>
             </article>
         </div>
     </section>
