@@ -13,6 +13,22 @@
 **怎么做的？**  
 纯HTML/CSS/JS实现，零依赖，响应式设计，渐进增强。
 
+
+
+## 整体样式展示
+
+![企业展示效果](GIF\2025-06-07120347-ezgif.com-video-to-gif-converter.gif)
+
+![赛博朋克效果](GIF\2025-06-07120557-ezgif.com-video-to-gif-converter.gif)
+
+![手风琴样式](GIF\2025-06-07121358-ezgif.com-video-to-gif-converter.gif)
+
+![3D透视效果](GIF\2025-06-07121043-ezgif.com-video-to-gif-converter.gif)
+
+![磁吸滚动效果](GIF\2025-06-07121444-ezgif.com-video-to-gif-converter.gif)
+
+
+
 ---
 
 ## 文件说明
@@ -97,7 +113,7 @@ CSS-only     ←→     JavaScript
 
 ## 使用指南
 
-### 选择决策树
+### 选择决策
 ```
 企业展示需求？
 ├─ 是 → index.html (视觉冲击)
